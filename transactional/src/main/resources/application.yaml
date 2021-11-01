@@ -1,2 +1,24 @@
 server:
   port: 10240
+
+spring:
+  application:
+    name: transaction
+  datasource:
+    url: ENC(nwiwxZp1p6FGqUmo1uweLTTSBVJN22KE8z2UrZ8pH7fNTKmlvyQRXaaHq9TCJJqZ0AsRqvB8vdrlQFlf55xRrW92nRylBD2PoQR3spT9389i9Ywv6XRbFuvPEQpLPh28F3hi1CEDpWqSkFKdxeIk47gZYSMFa8s60wRfr+ebvPwOiXAa8tJIBnItDz7E/F/l)
+    username: ENC(p1bW/fuuThTIgh/1Engj/VTdt+2wASsFnZJicPmCwcQcMtWcOVq3FA0xyJbIUs6t)
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    password: ENC(TiaGIbF2aUen29TcRHBmxpOsisZqVcVI6MZNQiK7qjChBLr8Pv9xQd+JSworDMa5)
+    hikari:
+      # 连接超时时间：毫秒，小于250毫秒，否则被重置为默认值30秒
+      connection-timeout: 30000
+      # 空闲连接超时时间，默认值600000（10分钟），大于等于max-lifetime且max-lifetime>0，会被重置为0；不等于0且小于10秒，会被重置为10秒。
+      idle-timeout: 600000
+      # 池中连接的最长生命周期，值0表示无限生命周期，默认1800000即30分钟
+      max-lifetime: 1800000
+      # 最小空闲连接，默认值10，小于0或大于maximum-pool-size，都会重置为maximum-pool-size
+      minimum-idle: 10
+      #  最大连接数，小于等于0会被重置为默认值10；大于零小于1会被重置为minimum-idle的值
+      maximum-pool-size: 10
+      # 验证数据库连接是否处于活动状
+      connection-test-query: SELECT 1

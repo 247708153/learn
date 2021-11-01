@@ -24,7 +24,8 @@
         </developer>
     </developers>
     <modules>
-        <module></module>
+        <module>transactional</module>
+        <module>mybatis-plus</module>
     </modules>
 
 
@@ -34,21 +35,32 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-<!--        阿里巴巴官网推荐的版本依赖-->
+        <!--        阿里巴巴官网推荐的版本依赖-->
         <springboot.version>2.3.2.RELEASE</springboot.version>
         <spring.cloud.alibaba.version>2.2.6.RELEASE</spring.cloud.alibaba.version>
         <spring.cloud.version>Hoxton.SR9</spring.cloud.version>
-
-<!--        好用的第三方依赖-->
+        <!--        数据库依赖版本-->
+        <mysql.version>8.0.22</mysql.version>
+        <!--        好用的第三方依赖-->
         <hutool.version>5.7.14</hutool.version>
+        <jasypt.spring.boot.starter.version>3.0.2</jasypt.spring.boot.starter.version>
+
+        <!--        swagger-->
+        <springfox-swagger2>2.9.2</springfox-swagger2>
+        <springfox-swagger-ui>2.9.2</springfox-swagger-ui>
+        <!--        mybatis-->
+        <mybatis.plus.version>3.4.1</mybatis.plus.version>
+        <mybatis-plus-boot-starter.version>3.4.1</mybatis-plus-boot-starter.version>
+        <mybatis-plus-generator.version>3.5.1</mybatis-plus-generator.version>
+
     </properties>
 
-<!--    只声明 不引用 -->
+    <!--    只声明 不引用 -->
     <dependencyManagement>
         <dependencies>
 
-<!--            毕业版本依赖关系(推荐使用) -->
-<!--            https://github.com/spring-cloud/spring-cloud-release/wiki/Spring-Cloud-Hoxton-Release-Notes-->
+            <!--            毕业版本依赖关系(推荐使用) -->
+            <!--            https://github.com/spring-cloud/spring-cloud-release/wiki/Spring-Cloud-Hoxton-Release-Notes-->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
@@ -71,11 +83,48 @@
                 <scope>import</scope>
             </dependency>
 
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus</artifactId>
+                <version>${mybatis.plus.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis-plus-boot-starter.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-generator</artifactId>
+                <version>${mybatis-plus-generator.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>${springfox-swagger2}</version>
+            </dependency>
+
+            <!--生成UI界面-->
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger-ui</artifactId>
+                <version>${springfox-swagger-ui}</version>
+            </dependency>
         </dependencies>
+
 
     </dependencyManagement>
 
-<!--    默认被子模块继承-->
+    <!--    默认被子模块继承-->
     <dependencies>
         <dependency>
             <groupId>cn.hutool</groupId>
@@ -97,6 +146,13 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
+        </dependency>
+
+<!--        配置文件关键数据加密-->
+        <dependency>
+            <groupId>com.github.ulisesbocchio</groupId>
+            <artifactId>jasypt-spring-boot-starter</artifactId>
+            <version>${jasypt.spring.boot.starter.version}</version>
         </dependency>
     </dependencies>
 
