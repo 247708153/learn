@@ -39,12 +39,12 @@ public class NoTransactional {
      * @param isThrow
      * @throws Exception
      */
-    @Transactional(rollbackFor = Exception.class)
+//    @Transactional(rollbackFor = Exception.class)
     public void noTransactional(Integer isThrow) throws Exception{
         addAndUpdate(isThrow);
     }
 
-    @Transactional(rollbackFor = Exception.class)
+//    @Transactional(rollbackFor = Exception.class)
     public void noTransactional2(Integer isThrow) throws Exception{
         addAndUpdate2(isThrow);
     }

@@ -33,7 +33,7 @@ public class CallYourself extends ServiceImpl<UserMapper, User> implements IUser
     }
 
     /**
-     * 自己調用自己 保證事務
+     * 自己調用自己 多个事务 分别回滚
      * 预期：用户添加成功，修改成功 报错后 不添加 不修改
      * 结果：事务分别回滚
      * @param isThrow
