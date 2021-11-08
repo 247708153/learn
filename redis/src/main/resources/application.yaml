@@ -1,0 +1,64 @@
+server:
+  port: 10241
+
+spring:
+  application:
+    name: redis
+  datasource:
+    url: ENC(nwiwxZp1p6FGqUmo1uweLTTSBVJN22KE8z2UrZ8pH7fNTKmlvyQRXaaHq9TCJJqZ0AsRqvB8vdrlQFlf55xRrW92nRylBD2PoQR3spT9389i9Ywv6XRbFuvPEQpLPh28F3hi1CEDpWqSkFKdxeIk47gZYSMFa8s60wRfr+ebvPwOiXAa8tJIBnItDz7E/F/l)
+    username: ENC(p1bW/fuuThTIgh/1Engj/VTdt+2wASsFnZJicPmCwcQcMtWcOVq3FA0xyJbIUs6t)
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    password: ENC(TiaGIbF2aUen29TcRHBmxpOsisZqVcVI6MZNQiK7qjChBLr8Pv9xQd+JSworDMa5)
+    hikari:
+      # 连接超时时间,默认30秒，即30000
+      connection-timeout: 3000
+      # 空闲连接存活最大时间，默认600000（10分钟）
+      idle-timeout: 600000
+      # 池中连接的最长生命周期，值0表示无限生命周期，默认1800000即30分钟
+      max-lifetime: 1800000
+      # 最小空闲连接数量,默认值：与maximumPoolSize相同
+      # minimum-idle: 10
+      # 连接池最大连接数，默认是10
+      maximum-pool-size: 10
+      # 验证数据库连接是否处于活动状
+      connection-test-query: SELECT 1
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password: ENC(owAY+7+Taq53zuduIDkvaVByZph2ASZ3OoKFUhNmdCPWpEiz3hKeTw/NmMKozZ0O)
+    database: 6
+jetcache:
+  statIntervalMinutes: 60 # 用于统计缓存调用相关信息的统计间隔（分钟），0表示不统计。
+  areaInCacheName: false  # 缓存实例名称cacheName会作为缓存key的前缀，2.4.3以前的版本总是把areaName加在cacheName中，因此areaName也出现在key前缀中。我们一般设置为false。
+  penetrationProtect: false # 当缓存访问未命中的情况下，对并发进行的加载行为进行保护。 当前版本实现的是单JVM内的保护，即同一个JVM中同一个key只有一个线程去加载，其它线程等待结果。这是全局配置，如果缓存实例没有指定则使用全局配置。
+  enableMethodCache: true # 是否使用jetcache缓存。
+  hiddenPackages: com.xiangjing.redis #  自动生成缓存实例名称时，为了不让名称太长，hiddenPackages指定的包名前缀会被截掉，多个包名使用逗号分隔。我们一般会指定每个缓存实例的名称。
+  local:
+    default:
+      type: caffeine # 本地缓存类型，支持 linkedhashmap、caffeine。
+      limit: 100 #每个缓存实例存储的缓存数量的全局配置，仅本地缓存需要配置，如果缓存实例没有指定则使用全局配置，请结合实例的业务场景进行配置该参数。
+      keyConvertor: fastjson # 缓存key转换器的全局配置，支持的类型：fastjson。仅当使用@CreateCache且缓存类型为LOCAL时可以指定为none，此时通过equals方法来识别key。方法缓存必须指定keyConvertor。支持自定义转换器函数，可设置为：bean:beanName，然后会从spring容器中获取该bean。
+      expireAfterWriteInMillis: 600000 #本地缓存超时时间的全局配置（毫秒）。
+      expireAfterAccessInMillis: 300000 #多长时间没访问就让缓存失效的全局配置（毫秒），仅支持本地缓存。0表示不使用这个功能。
+  remote:
+    default:
+      type: redis.lettuce # 连接Redis的客户端类型，支持 redis、redis.lettuce、redis.springdata。
+#      keyPrefix: 'xiangjing:learn:'
+      keyConvertor: fastjson
+#      valueEncoder: bean:fastjsonValueEncoder # 保存至远程缓存value的编码函数，支持：java、kryo。支持自定义编码函数，可设置为：bean:beanName，然后会从spring容器中获取该bean。
+      valueEncoder: java # 保存至远程缓存value的编码函数，支持：java、kryo。支持自定义编码函数，可设置为：bean:beanName，然后会从spring容器中获取该bean。
+#      valueDecoder: bean:fastjsonValueDncoder # 保存至远程缓存value的解码函数，支持：java、kryo。支持自定义解码函数，可设置为：bean:beanName，然后会从spring容器中获取该bean。
+      valueDecoder: java # 保存至远程缓存value的解码函数，支持：java、kryo。支持自定义解码函数，可设置为：bean:beanName，然后会从spring容器中获取该bean。
+      expireAfterWriteInMillis: 3600000
+      uri: redis://${spring.redis.host}:${spring.redis.port} # ????
+      poolConfig:
+        minIdle: 10
+        maxIdle: 20
+        maxTotal: 50
+      password: ${spring.redis.password}
+      host: ${spring.redis.host}
+      port: ${spring.redis.port}
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

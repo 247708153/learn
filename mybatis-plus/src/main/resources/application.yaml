@@ -6,3 +6,7 @@ spring:
     username: ENC(p1bW/fuuThTIgh/1Engj/VTdt+2wASsFnZJicPmCwcQcMtWcOVq3FA0xyJbIUs6t)
     driver-class-name: com.mysql.cj.jdbc.Driver
     password: ENC(TiaGIbF2aUen29TcRHBmxpOsisZqVcVI6MZNQiK7qjChBLr8Pv9xQd+JSworDMa5)
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

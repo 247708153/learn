@@ -26,6 +26,7 @@
     <modules>
         <module>transactional</module>
         <module>mybatis-plus</module>
+        <module>redis</module>
     </modules>
 
 
@@ -52,6 +53,9 @@
         <mybatis.plus.version>3.4.1</mybatis.plus.version>
         <mybatis-plus-boot-starter.version>3.4.1</mybatis-plus-boot-starter.version>
         <mybatis-plus-generator.version>3.5.1</mybatis-plus-generator.version>
+<!--        jetcache redis-->
+        <jetcache-starter-redis.version>2.6.0.RC</jetcache-starter-redis.version>
+        <jetcache-starter-redis-lettuce.version>2.6.0.RC</jetcache-starter-redis-lettuce.version>
 
     </properties>
 
@@ -119,9 +123,21 @@
                 <artifactId>springfox-swagger-ui</artifactId>
                 <version>${springfox-swagger-ui}</version>
             </dependency>
+
+            <!-- 使用 jedis 客户端添加以下依赖 -->
+            <dependency>
+                <groupId>com.alicp.jetcache</groupId>
+                <artifactId>jetcache-starter-redis</artifactId>
+                <version>${jetcache-starter-redis.version}</version>
+            </dependency>
+            <!-- 使用 lettuce 客户端添加以下依赖 -->
+            <dependency>
+                <groupId>com.alicp.jetcache</groupId>
+                <artifactId>jetcache-starter-redis-lettuce</artifactId>
+                <version>${jetcache-starter-redis-lettuce.version}</version>
+            </dependency>
+
         </dependencies>
-
-
     </dependencyManagement>
 
     <!--    默认被子模块继承-->
