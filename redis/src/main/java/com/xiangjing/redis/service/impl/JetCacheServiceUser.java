@@ -7,9 +7,9 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.xiangjing.redis.entity.User;
 import com.xiangjing.redis.mapper.UserMapper;
 import com.xiangjing.redis.service.JetCacheService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,20 +23,20 @@ import java.util.List;
 public class JetCacheServiceUser implements JetCacheService<User> {
 
     public static final String CACHE_NAME = "user:list";
-
     private final ConfigProvider configProvider;
-
     private UserMapper mapper;
+    @Autowired
+    private JetCacheServiceUser myself;
 
     public JetCacheServiceUser(ConfigProvider configProvider, UserMapper userMapper) {
         this.configProvider = configProvider;
         this.mapper = userMapper;
     }
 
-    @CreateCache(name = CACHE_NAME, expire = 3600*6, localLimit = 50 ,cacheType = CacheType.REMOTE)
+    @CreateCache(expire = 3600*6, localLimit = 50 ,cacheType = CacheType.REMOTE)
     @CacheRefresh(refresh = 3600, stopRefreshAfterLastAccess = 3600 * 2)
     @CachePenetrationProtect
-    private Cache<List,List<User>> cache;
+    private Cache<Object,List<User>> cache;
 
     @Override
     @Cached(name = CACHE_NAME, key = "{#user.id,#user.name}",expire = 3600*6, localLimit = 50, cacheType = CacheType.REMOTE)
@@ -46,17 +46,28 @@ public class JetCacheServiceUser implements JetCacheService<User> {
         return mapper.selectById(user.getId());
     }
 
-    @Override
-    public User updateValue(User user) {
-        mapper.update(user, new UpdateWrapper<User>().eq("id", user.getId()));
-        Cache<Object, Object> cache = configProvider.getCacheContext().getCache(CACHE_NAME);
-        this.cache.get(new ArrayList(){{
-            add(user.getId());add(user.getName());}});
-        return user;
+    @Cached(name = CACHE_NAME,expire = 3600*6, localLimit = 50, cacheType = CacheType.REMOTE)
+    @CacheRefresh(refresh = 3600, stopRefreshAfterLastAccess = 3600 * 2)
+    @CachePenetrationProtect
+    public List<User> selectList() {
+        return mapper.selectList(null);
     }
 
     @Override
-    @CacheInvalidate(name = CACHE_NAME, key="#user.id")
+    @CacheUpdate(name = CACHE_NAME, key = "{#user.id,#user.name}", value="#user")
+    public User updateValue(User user) {
+        mapper.update(user, new UpdateWrapper<User>().eq("id", user.getId()));
+        return user;
+    }
+
+    public void deleteAll(List<User> list){
+        for (User user : list) {
+            myself.deleteValue(user);
+        }
+    }
+
+    @Override
+    @CacheInvalidate(name = CACHE_NAME, key = "{#user.id,#user.name}")
     public int deleteValue(User user) {
         return mapper.deleteById(user.getId());
     }

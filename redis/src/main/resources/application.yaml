@@ -46,9 +46,9 @@ jetcache:
 #      keyPrefix: 'xiangjing:learn:'
       keyConvertor: fastjson
 #      valueEncoder: bean:fastjsonValueEncoder # 保存至远程缓存value的编码函数，支持：java、kryo。支持自定义编码函数，可设置为：bean:beanName，然后会从spring容器中获取该bean。
-      valueEncoder: java # 保存至远程缓存value的编码函数，支持：java、kryo。支持自定义编码函数，可设置为：bean:beanName，然后会从spring容器中获取该bean。
+      valueEncoder: yuanc # 保存至远程缓存value的编码函数，支持：java、kryo。支持自定义编码函数，可设置为：bean:beanName，然后会从spring容器中获取该bean。
 #      valueDecoder: bean:fastjsonValueDncoder # 保存至远程缓存value的解码函数，支持：java、kryo。支持自定义解码函数，可设置为：bean:beanName，然后会从spring容器中获取该bean。
-      valueDecoder: java # 保存至远程缓存value的解码函数，支持：java、kryo。支持自定义解码函数，可设置为：bean:beanName，然后会从spring容器中获取该bean。
+      valueDecoder: yuanc # 保存至远程缓存value的解码函数，支持：java、kryo。支持自定义解码函数，可设置为：bean:beanName，然后会从spring容器中获取该bean。
       expireAfterWriteInMillis: 3600000
       uri: redis://${spring.redis.host}:${spring.redis.port} # ????
       poolConfig:

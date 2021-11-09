@@ -1,11 +1,14 @@
 package com.xiangjing.redis.config;
 
+import com.alicp.jetcache.anno.support.SpringConfigProvider;
 import com.alicp.jetcache.autoconfigure.LettuceFactory;
 import com.alicp.jetcache.autoconfigure.RedisLettuceAutoConfiguration;
 import io.lettuce.core.RedisClient;
-import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
+
+import java.util.function.Function;
 
 /**
  * @author : xiangjing
@@ -14,7 +17,7 @@ import org.springframework.context.annotation.DependsOn;
  * @date : 2021/11/3 - 11:16
  * @description : <使用lettuce>
  */
-@Configurable
+@Configuration
 public class LettuceJetcacheConfig {
 
     @Bean(name = "defaultClient")
@@ -25,5 +28,27 @@ public class LettuceJetcacheConfig {
 //        @Autowired
 //        private RedisClient defaultClient;
 
+    }
+
+    @Bean
+    public SpringConfigProvider springConfigProvider() {
+        return new SpringConfigProvider() {
+            @Override
+            public Function<Object, byte[]> parseValueEncoder(String valueEncoder) {
+                if(valueEncoder.equals("yuanc")){
+                    return new FastjsonValueEncoder();
+                }else{
+                    return super.parseValueEncoder(valueEncoder);
+                }
+            };
+            @Override
+            public Function<byte[], Object> parseValueDecoder(String valueDecoder) {
+                if(valueDecoder.equals("yuanc")){
+                    return new FastjsonValueDecoder();
+                }else{
+                    return super.parseValueDecoder(valueDecoder);
+                }
+            }
+        };
     }
 }

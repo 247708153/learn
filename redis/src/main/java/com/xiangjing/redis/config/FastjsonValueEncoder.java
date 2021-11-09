@@ -1,7 +1,6 @@
 package com.xiangjing.redis.config;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alicp.jetcache.support.AbstractValueEncoder;
 import com.alicp.jetcache.support.CacheEncodeException;
 import org.springframework.stereotype.Component;
@@ -25,7 +24,8 @@ public class FastjsonValueEncoder extends AbstractValueEncoder {
     @Override
     public byte[] apply(Object value) {
         try {
-            byte[] bs1 = JSON.toJSONBytes(value, SerializerFeature.WriteClassName);
+            byte[] bs1 = JSON.toJSONString(value).getBytes();
+//            byte[] bs1 = JSON.toJSONBytes(value, SerializerFeature.WriteClassName);
 
             if (useIdentityNumber) {
                 byte[] bs2 = new byte[bs1.length + 4];
