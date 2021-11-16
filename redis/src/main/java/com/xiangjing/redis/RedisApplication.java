@@ -12,7 +12,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @EnableMethodCache(basePackages = "com.xiangjing.redis.service.impl")
 public class RedisApplication {
 
-    //test
     public static void main(String[] args) {
         SpringApplication.run(RedisApplication.class, args);
     }
