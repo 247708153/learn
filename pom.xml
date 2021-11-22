@@ -27,6 +27,7 @@
         <module>transactional</module>
         <module>mybatis-plus</module>
         <module>redis</module>
+        <module>multithreading</module>
     </modules>
 
 

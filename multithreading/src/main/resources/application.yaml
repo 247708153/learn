@@ -1,0 +1,18 @@
+server:
+  port: 10222
+
+spring:
+  application:
+    name: multithreading
+  datasource:
+    url: ENC(nwiwxZp1p6FGqUmo1uweLTTSBVJN22KE8z2UrZ8pH7fNTKmlvyQRXaaHq9TCJJqZ0AsRqvB8vdrlQFlf55xRrW92nRylBD2PoQR3spT9389i9Ywv6XRbFuvPEQpLPh28F3hi1CEDpWqSkFKdxeIk47gZYSMFa8s60wRfr+ebvPwOiXAa8tJIBnItDz7E/F/l)
+    username: ENC(p1bW/fuuThTIgh/1Engj/VTdt+2wASsFnZJicPmCwcQcMtWcOVq3FA0xyJbIUs6t)
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    password: ENC(TiaGIbF2aUen29TcRHBmxpOsisZqVcVI6MZNQiK7qjChBLr8Pv9xQd+JSworDMa5)
+    hikari:
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+      minimum-idle: 10
+      maximum-pool-size: 10
+      connection-test-query: SELECT 1
