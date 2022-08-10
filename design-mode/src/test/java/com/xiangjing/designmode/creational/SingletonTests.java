@@ -1,4 +1,4 @@
-package com.xiangjing.designmode;
+package com.xiangjing.designmode.creational;
 
 import com.xiangjing.designmode.creational.singleton.HungerSingleton;
 import com.xiangjing.designmode.creational.singleton.InnerSingleton;
